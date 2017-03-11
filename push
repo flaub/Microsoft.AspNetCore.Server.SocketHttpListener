@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf Microsoft.AspNetCore.Server.SocketHttpListener/bin/Release/*.nupkg
+dotnet pack -c Release Microsoft.AspNetCore.Server.SocketHttpListener
+nuget push 'Microsoft.AspNetCore.Server.SocketHttpListener/bin/Release/*.nupkg'
