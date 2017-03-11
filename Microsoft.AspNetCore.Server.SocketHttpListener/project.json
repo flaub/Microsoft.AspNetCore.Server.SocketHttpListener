@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7",
+    "version": "1.0.8",
     "authors": [
         "Frank Laub"
     ],
@@ -10,7 +10,7 @@
         "repository": {
             "url": "https://github.com/flaub/Microsoft.AspNetCore.Server.SocketHttpListener"
         },
-        "releaseNotes": "Improve compatibilty with HttpAbstractions, fixes issues with case-insensitive header names"
+        "releaseNotes": "Avoid unhandled exceptions from bringing down the entire process."
     },
     "buildOptions": {
         "debugType": "portable"
