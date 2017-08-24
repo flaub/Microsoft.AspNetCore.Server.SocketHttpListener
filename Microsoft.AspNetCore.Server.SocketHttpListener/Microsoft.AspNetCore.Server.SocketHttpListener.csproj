@@ -4,7 +4,7 @@
     <Description>SocketHttpListener is a standalone HttpListener with support for SSL, WebSockets and Mono.</Description>
     <VersionPrefix>1.0.8</VersionPrefix>
     <Authors>Frank Laub</Authors>
-    <TargetFramework>net451</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Microsoft.AspNetCore.Server.SocketHttpListener</AssemblyName>
     <PackageId>Microsoft.AspNetCore.Server.SocketHttpListener</PackageId>
