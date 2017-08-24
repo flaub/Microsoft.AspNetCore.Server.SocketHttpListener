@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.0.0
-MinimumVisualStudioVersion = 10.0.0.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "App", "App\App.xproj", "{A34C7ED9-63B9-4E36-BDD5-9B83D9EDFA26}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "App\App.csproj", "{A34C7ED9-63B9-4E36-BDD5-9B83D9EDFA26}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNetCore.Server.SocketHttpListner", "Microsoft.AspNetCore.Server.SocketHttpListener\Microsoft.AspNetCore.Server.SocketHttpListner.xproj", "{D1CCD8A4-3532-48E8-89A4-38A10B7A7683}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Server.SocketHttpListener", "Microsoft.AspNetCore.Server.SocketHttpListener\Microsoft.AspNetCore.Server.SocketHttpListener.csproj", "{D1CCD8A4-3532-48E8-89A4-38A10B7A7683}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD0C6136-65E7-4D63-BE92-B90F932E0000}
 	EndGlobalSection
 EndGlobal

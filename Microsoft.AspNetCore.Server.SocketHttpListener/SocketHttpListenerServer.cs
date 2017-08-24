@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -35,7 +36,7 @@ namespace Microsoft.AspNetCore.Server.SocketHttpListener
 			Features.Set<IServerAddressesFeature>(new ServerAddressesFeature());
 		}
 
-		public void Start<TContext>(IHttpApplication<TContext> application)
+		public Task StartAsync<TContext>(IHttpApplication<TContext> application, CancellationToken cancellationToken)
 		{
 			if (application == null)
 				throw new ArgumentNullException(nameof(application));
@@ -49,9 +50,18 @@ namespace Microsoft.AspNetCore.Server.SocketHttpListener
 				_listener.Prefixes.Add(withPath);
 			}
 			_listener.Start();
+
+            return Task.CompletedTask;
 		}
 
-		public void Dispose()
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            _listener.Stop();
+
+            return Task.CompletedTask;
+        }
+
+        public void Dispose()
 		{
 			_listener.Stop();
 		}
@@ -122,7 +132,7 @@ namespace Microsoft.AspNetCore.Server.SocketHttpListener
 			}
 		}
 
-		private class ApplicationWrapper<TContext> : IHttpApplication<object>
+        private class ApplicationWrapper<TContext> : IHttpApplication<object>
 		{
 			private readonly IHttpApplication<TContext> _application;
 

@@ -5,14 +5,19 @@ using System.Collections.Specialized;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Net.Http.Headers;
 
 namespace Microsoft.AspNetCore.Server.SocketHttpListener
 {
 	public class HeaderDictionary : IHeaderDictionary
 	{
-		private readonly NameValueCollection _collection;
+        const string CONTENT_LENGTH = "Content-Length";
 
-		public HeaderDictionary(NameValueCollection collection)
+        private readonly NameValueCollection _collection;
+        private long? _contentLength;
+        private StringValues _contentLengthText;
+
+        public HeaderDictionary(NameValueCollection collection)
 		{
 			_collection = collection;
 		}
@@ -33,7 +38,51 @@ namespace Microsoft.AspNetCore.Server.SocketHttpListener
 			.Cast<StringValues>()
 			.ToList();
 
-		public void Add(KeyValuePair<string, StringValues> item) => Add(item.Key, item.Value);
+        public long? ContentLength
+        {
+            get
+            {
+                long value;
+                var rawValue = this[CONTENT_LENGTH];
+
+                if (_contentLengthText.Equals(rawValue))
+                {
+                    return _contentLength;
+                }
+
+                if (rawValue.Count == 1 &&
+                    !string.IsNullOrWhiteSpace(rawValue[0]) &&
+                    HeaderUtilities.TryParseNonNegativeInt64(new StringSegment(rawValue[0]).Trim(), out value))
+                {
+                    _contentLengthText = rawValue;
+                    _contentLength = value;
+                    return value;
+                }
+
+                return null;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (value.Value < 0)
+                    {
+                        throw new ArgumentOutOfRangeException("value", value.Value, "Cannot be negative.");
+                    }
+                    _contentLengthText = HeaderUtilities.FormatNonNegativeInt64(value.Value);
+                    this[CONTENT_LENGTH] = _contentLengthText;
+                    _contentLength = value;
+                }
+                else
+                {
+                    Remove(CONTENT_LENGTH);
+                    _contentLengthText = StringValues.Empty;
+                    _contentLength = null;
+                }
+            }
+        }
+
+        public void Add(KeyValuePair<string, StringValues> item) => Add(item.Key, item.Value);
 
 		public void Add(string key, StringValues value)
 		{
